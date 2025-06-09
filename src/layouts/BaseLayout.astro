@@ -1,13 +1,10 @@
 ---
-// Learn about using Astro layouts:
-// https://docs.astro.build/en/core-concepts/layouts/
+import '../styles/global.css';
 
-import '../styles/global.css'; // ✅ This line is essential
-
-// Component Imports
 import MainHead from '../components/MainHead.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { withBase } from '../utils/url';
 
 interface Props {
 	title?: string | undefined;
@@ -29,15 +26,14 @@ const { title, description } = Astro.props;
 		</div>
 
 		<script>
-			// Add “loaded” class once the document has completely loaded.
 			addEventListener('load', () => document.documentElement.classList.add('loaded'));
 		</script>
 
-		<style>
+		<style is:global>
 			:root {
 				--_placeholder-bg: linear-gradient(transparent, transparent);
-				--bg-image-main: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-main-light-800w.jpg');
-				--bg-image-main-curves: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-main-light.svg');
+				--bg-image-main: url("{withBase('assets/backgrounds/bg-main-light-800w.jpg')}");
+				--bg-image-main-curves: url("{withBase('assets/backgrounds/bg-main-light.svg')}");
 				--bg-image-subtle-1: var(--_placeholder-bg);
 				--bg-image-subtle-2: var(--_placeholder-bg);
 				--bg-image-footer: var(--_placeholder-bg);
@@ -50,41 +46,44 @@ const { title, description } = Astro.props;
 			}
 
 			:root.theme-dark {
-				--bg-image-main: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-main-dark-800w.jpg');
-				--bg-image-main-curves: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-main-dark.svg');
+				--bg-image-main: url("{withBase('assets/backgrounds/bg-main-dark-800w.jpg')}");
+				--bg-image-main-curves: url("{withBase('assets/backgrounds/bg-main-dark.svg')}");
 				--bg-svg-blend-mode: darken;
 				--bg-blend-mode: lighten;
 			}
 
 			:root.loaded {
-				--bg-image-subtle-1: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-1-light-800w.jpg');
-				--bg-image-subtle-2: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-2-light-800w.jpg');
-				--bg-image-footer: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-footer-light-800w.jpg');
+				--bg-image-subtle-1: url("{withBase('assets/backgrounds/bg-subtle-1-light-800w.jpg')}");
+				--bg-image-subtle-2: url("{withBase('assets/backgrounds/bg-subtle-2-light-800w.jpg')}");
+				--bg-image-footer: url("{withBase('assets/backgrounds/bg-footer-light-800w.jpg')}");
 			}
+
 			:root.loaded.theme-dark {
-				--bg-image-subtle-1: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-1-dark-800w.jpg');
-				--bg-image-subtle-2: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-2-dark-800w.jpg');
-				--bg-image-footer: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-footer-dark-800w.jpg');
+				--bg-image-subtle-1: url("{withBase('assets/backgrounds/bg-subtle-1-dark-800w.jpg')}");
+				--bg-image-subtle-2: url("{withBase('assets/backgrounds/bg-subtle-2-dark-800w.jpg')}");
+				--bg-image-footer: url("{withBase('assets/backgrounds/bg-footer-dark-800w.jpg')}");
 			}
 
 			@media (min-width: 50em) {
 				:root {
 					--bg-scale: 1;
-					--bg-image-main: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-main-light-1440w.jpg');
+					--bg-image-main: url("{withBase('assets/backgrounds/bg-main-light-1440w.jpg')}");
 				}
+
 				:root.theme-dark {
-					--bg-image-main: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-main-dark-1440w.jpg');
+					--bg-image-main: url("{withBase('assets/backgrounds/bg-main-dark-1440w.jpg')}");
 				}
 
 				:root.loaded {
-					--bg-image-subtle-1: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-1-light-1440w.jpg');
-					--bg-image-subtle-2: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-2-light-1440w.jpg');
-					--bg-image-footer: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-footer-light-1440w.jpg');
+					--bg-image-subtle-1: url("{withBase('assets/backgrounds/bg-subtle-1-light-1440w.jpg')}");
+					--bg-image-subtle-2: url("{withBase('assets/backgrounds/bg-subtle-2-light-1440w.jpg')}");
+					--bg-image-footer: url("{withBase('assets/backgrounds/bg-footer-light-1440w.jpg')}");
 				}
+
 				:root.loaded.theme-dark {
-					--bg-image-subtle-1: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-1-dark-1440w.jpg');
-					--bg-image-subtle-2: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-subtle-2-dark-1440w.jpg');
-					--bg-image-footer: url('${import.meta.env.BASE_URL}assets/backgrounds/bg-footer-dark-1440w.jpg');
+					--bg-image-subtle-1: url("{withBase('assets/backgrounds/bg-subtle-1-dark-1440w.jpg')}");
+					--bg-image-subtle-2: url("{withBase('assets/backgrounds/bg-subtle-2-dark-1440w.jpg')}");
+					--bg-image-footer: url("{withBase('assets/backgrounds/bg-footer-dark-1440w.jpg')}");
 				}
 			}
 
@@ -92,7 +91,7 @@ const { title, description } = Astro.props;
 				min-height: 100%;
 				isolation: isolate;
 				background:
-					url('${import.meta.env.BASE_URL}assets/backgrounds/noise.png') top center/220px repeat,
+					url("{withBase('assets/backgrounds/noise.png')}") top center/220px repeat,
 					var(--bg-image-footer) bottom center/var(--bg-gradient-size) no-repeat,
 					var(--bg-image-main-curves) top center/var(--bg-gradient-size) no-repeat,
 					var(--bg-image-main) top center/var(--bg-gradient-size) no-repeat,
@@ -104,6 +103,7 @@ const { title, description } = Astro.props;
 					normal,
 					normal;
 			}
+
 			@media (forced-colors: active) {
 				.backgrounds {
 					background: none;
